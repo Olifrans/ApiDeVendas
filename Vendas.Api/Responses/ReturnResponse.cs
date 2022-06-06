@@ -10,6 +10,5 @@ namespace Vendas.Api.Responses
     {
         public int Code { get; set; }
         public string Message { get; set; }
-
     }
 }
