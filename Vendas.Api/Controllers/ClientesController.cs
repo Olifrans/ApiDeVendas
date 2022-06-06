@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Vendas.Api.Mapper;
 using Vendas.Api.Models;
 using Vendas.Api.Request;
 using Vendas.Api.Responses;
@@ -14,27 +15,27 @@ namespace Vendas.Api.Controllers
         [HttpGet]
         public ActionResult<List<ClienteResponse>> Get()
         {
-            var getClienteRequest = new ClienteResponse()
+            var cliente = new Cliente()
             {
-                Id = "1",
+                Id = 1,
                 Nome = "Olifrans",
                 Email = "olifrans@gmail",
-                DT_Nascimento = DateTime.Now.AddYears(-20).ToString(),
+                DT_Nascimento = DateTime.Now.AddYears(-20),
             };
 
-            var getClienteRequest2 = new ClienteResponse()
+            var cliente2 = new Cliente()
             {
-                Id = "2",
+                Id = 2,
                 Nome = "Frans",
                 Email = "frans@gmail",
-                DT_Nascimento = DateTime.Now.AddYears(-20).ToString(),
+                DT_Nascimento = DateTime.Now.AddYears(-20),
             };
 
-            var ClienteRequests = new List<ClienteResponse>();
-            ClienteRequests.Add(getClienteRequest);
-            ClienteRequests.Add(getClienteRequest2);
+            var clienteResponses = new List<ClienteResponse>();
+            clienteResponses.Add(ClienteMapper.Mapper(cliente));
+            clienteResponses.Add(ClienteMapper.Mapper(cliente2));
 
-            return ClienteRequests;
+            return clienteResponses;
 
         }
 
@@ -56,6 +57,7 @@ namespace Vendas.Api.Controllers
         [HttpPost]
         public ActionResult<ReturnResponse> Post([FromBody] ClienteRequest clienteRequest)
         {
+            var novoClienteRequest = ClienteMapper.Mapper(clienteRequest);
             var createClienteRequest = new ReturnResponse()
             {
                 Code = 200,
