@@ -7,7 +7,7 @@ using Vendas.Api.Models;
 
 namespace Vendas.Api.Repositories
 {
-    public static class ProdutosRepositories
+    public static class ProdutosRepository
     {
         public static void Gravar(Produto produto)
         { 
@@ -19,9 +19,12 @@ namespace Vendas.Api.Repositories
             
         }
 
-        public static IList<Produto> Buscar(int id, string nome)
+        public static IList<Produto> Buscar(int id, string descricao)
         {
-            return null;            
+            string sql = "select * from";
+
+            var getProduto = BaseRepository.QuerySql<Produto>(sql);
+            return getProduto;            
         }
 
     }

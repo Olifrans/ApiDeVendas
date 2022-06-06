@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Vendas.Api.Models;
+using Vendas.Api.Repositories;
 using Vendas.Api.Request;
 using Vendas.Api.Responses;
 
@@ -12,27 +13,13 @@ namespace Vendas.Api.Controllers
         [HttpGet]
         public ActionResult<List<ProdutoResponse>> Get()
         {
-            var getProdutoResponse = new ProdutoResponse()
-            {
-                Id = 1,
-                Descricao = "Dell",
-                Estoque = 10,
-                Valor = 350
-            };
+            return ProdutosRepository.Buscar(0, "");
 
-            var getProdutoResponse2 = new ProdutoResponse()
-            {
-                Id = 2,
-                Descricao = "Lenovo",
-                Estoque = 10,
-                Valor = 350
-            };
+            //var produtoResponses = new List<ProdutoResponse>();
+            //produtoResponses.Add(getProdutoResponse);
+            //produtoResponses.Add(getProdutoResponse2);
 
-            var produtoResponses = new List<ProdutoResponse>();
-            produtoResponses.Add(getProdutoResponse);
-            produtoResponses.Add(getProdutoResponse2);
-
-            return produtoResponses;
+            //return produtoResponses;
         }
 
         [HttpGet("{id}")]
