@@ -1,91 +1,91 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Vendas.Api.Models;
+using Vendas.Api.Request;
 using Vendas.Api.Responses;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
 
 namespace Vendas.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClientesController : ControllerBase
+    public class ClienteRequestsController : ControllerBase
     {
         [HttpGet]
-        public ActionResult<List<Cliente>> Get()
+        public ActionResult<List<ClienteResponse>> Get()
         {
-            var getCliente = new Cliente()
+            var getClienteRequest = new ClienteResponse()
             {
-                Id = 1,
+                Id = "1",
                 Nome = "Olifrans",
                 Email = "olifrans@gmail",
-                DT_Nascimento = DateTime.Now.AddYears(-20)
+                DT_Nascimento = DateTime.Now.AddYears(-20).ToString(),
             };
 
-            var getCliente2 = new Cliente()
+            var getClienteRequest2 = new ClienteResponse()
             {
-                Id = 1,
+                Id = "2",
                 Nome = "Frans",
                 Email = "frans@gmail",
-                DT_Nascimento = DateTime.Now.AddYears(-20)
+                DT_Nascimento = DateTime.Now.AddYears(-20).ToString(),
             };
 
-            var clientes = new List<Cliente>();
-            clientes.Add(getCliente);
-            clientes.Add(getCliente2);
+            var ClienteRequests = new List<ClienteResponse>();
+            ClienteRequests.Add(getClienteRequest);
+            ClienteRequests.Add(getClienteRequest2);
 
-            return clientes;
+            return ClienteRequests;
 
         }
-
 
 
         [HttpGet("{id}")]
-        public ActionResult<Cliente> Get(string id)
+        public ActionResult<ClienteResponse> Get(string id)
         {
-            var getCliente = new Cliente()
+            var getClienteResponset = new ClienteResponse()
             {                
-                Id = 1,
+                Id = "1",
                 Nome = "Frans",
                 Email = "frans@gmail",
-                DT_Nascimento = DateTime.Now.AddYears(-20)
+                DT_Nascimento = DateTime.Now.AddYears(-20).ToString(),
             };
-            return getCliente;
+            return getClienteResponset;
         }
 
-        // POST api/<ClientesController>
+ 
         [HttpPost]
-        public ActionResult<ReturnResponse> Post([FromBody] Cliente clienteRequest)
+        public ActionResult<ReturnResponse> Post([FromBody] ClienteRequest clienteRequest)
         {
-            var createCliente = new ReturnResponse()
+            var createClienteRequest = new ReturnResponse()
             {
                 Code = 200,
                 Message = "Dados cadastrado com sucesso"
             };
-            return createCliente;
+            return createClienteRequest;
         }
 
-        // PUT api/<ClientesController>/5
+   
         [HttpPut("{id}")]
-        public ActionResult<ReturnResponse> Put([FromBody] Cliente clienteRequest)
+        public ActionResult<ReturnResponse> Put([FromBody] ClienteRequest clienteRequest)
         {
-            var putCliente = new ReturnResponse()
+            var putClienteRequest = new ReturnResponse()
             {
                 Code = 200,
                 Message = "Dados atualizado com sucesso"
             };
-            return putCliente;
+            return putClienteRequest;
         }
 
-        // DELETE api/<ClientesController>/5
+
         [HttpDelete("{id}")]
         public ActionResult<ReturnResponse> Delete(int id)
         {
-            var deletCliente = new ReturnResponse()
+            var deletClienteRequest = new ReturnResponse()
             {
                 Code = 200,
                 Message = "Dados excluido com sucesso"
             };
-            return deletCliente;
+            return deletClienteRequest;
         }
     }
 }

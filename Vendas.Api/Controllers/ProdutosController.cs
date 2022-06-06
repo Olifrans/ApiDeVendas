@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Vendas.Api.Models;
+using Vendas.Api.Request;
 using Vendas.Api.Responses;
 
 namespace Vendas.Api.Controllers
@@ -9,9 +10,9 @@ namespace Vendas.Api.Controllers
     public class ProdutosController : ControllerBase
     {
         [HttpGet]
-        public ActionResult<List<Produto>> Get()
+        public ActionResult<List<ProdutoResponse>> Get()
         {
-            var getProduto = new Produto()
+            var getProdutoResponse = new ProdutoResponse()
             {
                 Id = 1,
                 Descricao = "Dell",
@@ -19,7 +20,7 @@ namespace Vendas.Api.Controllers
                 Valor = 350
             };
 
-            var getProduto2 = new Produto()
+            var getProdutoResponse2 = new ProdutoResponse()
             {
                 Id = 2,
                 Descricao = "Lenovo",
@@ -27,51 +28,49 @@ namespace Vendas.Api.Controllers
                 Valor = 350
             };
 
-            var produtos = new List<Produto>();
-            produtos.Add(getProduto);
-            produtos.Add(getProduto2);
+            var produtoResponses = new List<ProdutoResponse>();
+            produtoResponses.Add(getProdutoResponse);
+            produtoResponses.Add(getProdutoResponse2);
 
-            return produtos;
+            return produtoResponses;
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Produto> Get(string id)
+        public ActionResult<ProdutoResponse> Get(string id)
         {
-            var getProduto = new Produto()
+            var getProdutoResponse = new ProdutoResponse()
             {
                 Id = 3,
                 Descricao = "Nokia",
                 Estoque = 25,
                 Valor = 350
             };
-            return getProduto;
+            return getProdutoResponse;
         }
 
-        // POST api/<ProdutosController>
         [HttpPost]
-        public ActionResult<ReturnResponse> Post([FromBody] Produto produtoRequest)
+        public ActionResult<ReturnResponse> Post([FromBody] ProdutoRequest produtoRequest)
         {
-            var createProduto = new ReturnResponse()
+            var createProdutoRequest = new ReturnResponse()
             {
                 Code = 200,
                 Message = "Dados cadastrado com sucesso"
             };
-            return createProduto;
+            return createProdutoRequest;
         }
 
-        // PUT api/<ProdutosController>/5
         [HttpPut("{id}")]
-        public ActionResult<ReturnResponse> Put([FromBody] Produto produtoRequest)
+        public ActionResult<ReturnResponse> Put([FromBody] ProdutoRequest produtoRequest)
         {
-            var putProduto = new ReturnResponse()
+            var putProdutoRequest = new ReturnResponse()
             {
                 Code = 200,
                 Message = "Dados atualizado com sucesso"
             };
-            return putProduto;
+            return putProdutoRequest;
         }
 
-        // DELETE api/<ProdutosController>/5
+
         [HttpDelete("{id}")]
         public ActionResult<ReturnResponse> Delete(int id)
         {

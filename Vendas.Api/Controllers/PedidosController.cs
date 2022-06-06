@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Vendas.Api.Models;
+using Vendas.Api.Request;
 using Vendas.Api.Responses;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -10,72 +11,72 @@ namespace Vendas.Api.Controllers
     [ApiController]
     public class PedidosController : ControllerBase
     {
-        // GET: api/<PedidosController>
+
         [HttpGet]
-        public ActionResult<List<Pedido>> Get()
+        public ActionResult<List<PedidoResponse>> Get()
         {
-            var getPedido = new Pedido()
+            var getPedidoResponse = new PedidoResponse()
             {
-                Nr_Pedido = 1,
-                Cliente = new Cliente(),
-                DT_Pedido = DateTime.Now,
+                Nr_PedidoResponse = "1",
+                Cliente = new Cliente().ToString(),
+                DT_PedidoResponse = DateTime.Now.ToString(),
                 Tipo = "V",
-                Itens = new List<PedidoItem>()
+                Itens = new List<PedidoResponseItem>().ToString(),
             };
 
-            var getPedido2 = new Pedido()
+            var getPedidoResponse2 = new PedidoResponse()
             {
-                Nr_Pedido = 2,
-                Cliente = new Cliente(),
-                DT_Pedido = DateTime.Now,
+                Nr_PedidoResponse = "2",
+                Cliente = new Cliente().ToString(),
+                DT_PedidoResponse = DateTime.Now.ToString(),
                 Tipo = "V",
-                Itens = new List<PedidoItem>()
+                Itens = new List<PedidoResponseItem>().ToString(),
             };
 
-            var pedidos = new List<Pedido>();
-            pedidos.Add(getPedido);
-            pedidos.Add(getPedido2);
+            var PedidoResponses = new List<PedidoResponse>();
+            PedidoResponses.Add(getPedidoResponse);
+            PedidoResponses.Add(getPedidoResponse2);
 
-            return pedidos;
+            return PedidoResponses;
         }
 
-        // GET api/<PedidosController>/5
-        [HttpGet("{nr_pedido}")]
-        public ActionResult<Pedido> Get(int nr_pedido)
+
+        [HttpGet("{nr_PedidoResponse}")]
+        public ActionResult<PedidoResponse> Get(int nr_PedidoResponse)
         {
-            var getPedido = new Pedido()
+            var getPedidoResponse = new PedidoResponse()
             {
-                Nr_Pedido = 1,
-                Cliente = new Cliente(),
-                DT_Pedido = DateTime.Now,
+                Nr_PedidoResponse = "2",
+                Cliente = new Cliente().ToString(),
+                DT_PedidoResponse = DateTime.Now.ToString(),
                 Tipo = "V",
-                Itens = new List<PedidoItem>()
+                Itens = new List<PedidoResponseItem>().ToString(),
             };
-            return getPedido;
+            return getPedidoResponse;
         }
 
-        // POST api/<PedidosController>
+
         [HttpPost]
-        public ActionResult<ReturnResponse> Post([FromBody] Pedido pedidoRequest)
+        public ActionResult<ReturnResponse> Post([FromBody] PedidoRequest pedidoRequest)
         {
-            var postPedido = new ReturnResponse()
+            var postPedidoRequest = new ReturnResponse()
             {
                 Code = 200,
                 Message = "Dados cadastrado com sucesso"
             };
-            return postPedido;
+            return postPedidoRequest;
         }
 
-        // PUT api/<PedidosController>/5
+        // PUT api/<PedidoRequestsController>/5
         [HttpPut("{id}")]
-        public ActionResult<ReturnResponse> Put([FromBody] Pedido pedidoRequest)
+        public ActionResult<ReturnResponse> Put([FromBody] PedidoRequest pedidoRequest)
         {
-            var putPedido = new ReturnResponse()
+            var putPedidoRequest = new ReturnResponse()
             {
                 Code = 200,
                 Message = "Dados atualizado com sucesso"
             };
-            return putPedido;
+            return putPedidoRequest;
         }
 
         // DELETE api/<PedidosController>/5
