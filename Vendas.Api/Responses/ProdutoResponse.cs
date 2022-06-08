@@ -8,9 +8,9 @@ namespace Vendas.Api.Responses
 {
     public class ProdutoResponse
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string? Descricao { get; set; }
-        public int Estoque { get; set; }
-        public decimal Valor { get; set; }
+        public string Estoque { get; set; }
+        public string Valor { get; set; }
     }
 }

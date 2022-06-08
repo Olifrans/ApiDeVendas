@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Vendas.Api.Models;
+using Vendas.Api.Mapper;
 using Vendas.Api.Repositories;
 using Vendas.Api.Request;
 using Vendas.Api.Responses;
@@ -10,68 +10,52 @@ namespace Vendas.Api.Controllers
     [ApiController]
     public class ProdutosController : ControllerBase
     {
-        //[HttpGet]
-        //public ActionResult<List<Produto> Get()
-        //{
-        //    return ProdutosRepository.Buscar(0, "");
-
-        //    //var produtoResponses = new List<ProdutoResponse>();
-        //    //produtoResponses.Add(getProdutoResponse);
-        //    //produtoResponses.Add(getProdutoResponse2);
-
-        //    //return produtoResponses;
-        //}
-
         [HttpGet]
-        public ActionResult<List<Produto>> Get()
+        public ActionResult<List<ProdutoResponse>> Get()
         {
-            return ProdutosRepository.Buscar(0, "m");
+            var getProdutos = ProdutosRepository.Buscar().Select(p => ProdutoMapper.Mapper(p));
+            return getProdutos.ToList();
         }
 
-
-
-
-         [HttpGet("{id}")]
-        public ActionResult<ProdutoResponse> Get(string id)
+        [HttpGet("{id}")]
+        public ActionResult<ProdutoResponse> Get(int id)
         {
-            var getProdutoResponse = new ProdutoResponse()
-            {
-                Id = 3,
-                Descricao = "Nokia",
-                Estoque = 25,
-                Valor = 350
-            };
-            return getProdutoResponse;
+            var getProdutoId = ProdutoMapper.Mapper(ProdutosRepository.Buscar(id).FirstOrDefault());
+            return getProdutoId;
         }
-
-
-
 
         [HttpPost]
         public ActionResult<ReturnResponse> Post([FromBody] ProdutoRequest produtoRequest)
         {
-            var createProdutoRequest = new ReturnResponse()
+            var novoProduto = ProdutoMapper.Mapper(produtoRequest);
+            ProdutosRepository.Gravar(novoProduto);
+
+            var retornar = new ReturnResponse()
             {
                 Code = 200,
-                Message = "Dados cadastrado com sucesso"
+                Message = $"Produto {produtoRequest.Descricao} cadastrado com sucesso"
             };
-            return createProdutoRequest;
+            return retornar;
         }
 
         [HttpPut("{id}")]
         public ActionResult<ReturnResponse> Put([FromBody] ProdutoRequest produtoRequest)
         {
-            var putProdutoRequest = new ReturnResponse()
+            var updateProduto = ProdutoMapper.Mapper(produtoRequest);
+            ProdutosRepository.Atualizar(updateProduto);
+
+            var retornar = new ReturnResponse()
             {
                 Code = 200,
-                Message = "Dados atualizado com sucesso"
+                Message = "Produto atualizado com sucesso"
             };
-            return putProdutoRequest;
+            return retornar;
         }
 
         [HttpDelete("{id}")]
         public ActionResult<ReturnResponse> Delete(int id)
         {
+            ProdutosRepository.Delete(id);
             var deletProduto = new ReturnResponse()
             {
                 Code = 200,

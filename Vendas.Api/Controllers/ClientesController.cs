@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Vendas.Api.Mapper;
-using Vendas.Api.Models;
+using Vendas.Api.Repositories;
 using Vendas.Api.Request;
 using Vendas.Api.Responses;
-
-
 
 namespace Vendas.Api.Controllers
 {
@@ -15,79 +13,55 @@ namespace Vendas.Api.Controllers
         [HttpGet]
         public ActionResult<List<ClienteResponse>> Get()
         {
-            var cliente = new Cliente()
-            {
-                Id = 1,
-                Nome = "Olifrans",
-                Email = "olifrans@gmail",
-                DT_Nascimento = DateTime.Now.AddYears(-20),
-            };
-
-            var cliente2 = new Cliente()
-            {
-                Id = 2,
-                Nome = "Frans",
-                Email = "frans@gmail",
-                DT_Nascimento = DateTime.Now.AddYears(-20),
-            };
-
-            var clienteResponses = new List<ClienteResponse>();
-            clienteResponses.Add(ClienteMapper.Mapper(cliente));
-            clienteResponses.Add(ClienteMapper.Mapper(cliente2));
-
-            return clienteResponses;
-
+            var getClientes = ClientesRepository.Buscar().Select(p => ClienteMapper.Mapper(p));
+            return getClientes.ToList();
         }
-
 
         [HttpGet("{id}")]
-        public ActionResult<ClienteResponse> Get(string id)
+        public ActionResult<ClienteResponse> Get(int id)
         {
-            var getClienteResponset = new ClienteResponse()
-            {                
-                Id = "1",
-                Nome = "Frans",
-                Email = "frans@gmail",
-                DT_Nascimento = DateTime.Now.AddYears(-20).ToString(),
-            };
-            return getClienteResponset;
+            var getClienteId = ClienteMapper.Mapper(ClientesRepository.Buscar(id).FirstOrDefault());
+            return getClienteId;
         }
 
- 
         [HttpPost]
         public ActionResult<ReturnResponse> Post([FromBody] ClienteRequest clienteRequest)
         {
-            var novoClienteRequest = ClienteMapper.Mapper(clienteRequest);
-            var createClienteRequest = new ReturnResponse()
+            var novoCliente = ClienteMapper.Mapper(clienteRequest);
+            ClientesRepository.Gravar(novoCliente);
+
+            var retornar = new ReturnResponse()
             {
                 Code = 200,
-                Message = "Dados cadastrado com sucesso"
+                Message = $"Produto {clienteRequest.Nome} cadastrado com sucesso"
             };
-            return createClienteRequest;
+            return retornar;
         }
 
-   
         [HttpPut("{id}")]
         public ActionResult<ReturnResponse> Put([FromBody] ClienteRequest clienteRequest)
         {
-            var putClienteRequest = new ReturnResponse()
+            var updateCliente = ClienteMapper.Mapper(clienteRequest);
+            ClientesRepository.Atualizar(updateCliente);
+
+            var retornar = new ReturnResponse()
             {
                 Code = 200,
-                Message = "Dados atualizado com sucesso"
+                Message = "Produto atualizado com sucesso"
             };
-            return putClienteRequest;
+            return retornar;
         }
-
 
         [HttpDelete("{id}")]
         public ActionResult<ReturnResponse> Delete(int id)
         {
-            var deletClienteRequest = new ReturnResponse()
+            ClientesRepository.Delete(id);
+            var deleteCliente = new ReturnResponse()
             {
                 Code = 200,
                 Message = "Dados excluido com sucesso"
             };
-            return deletClienteRequest;
+            return deleteCliente;
         }
     }
 }

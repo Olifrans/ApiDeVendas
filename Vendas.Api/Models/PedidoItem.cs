@@ -1,7 +1,12 @@
-﻿namespace Vendas.Api.Models
+﻿using Dapper.Contrib.Extensions;
+
+namespace Vendas.Api.Models
 {
-    public class PedidoItem
+    [Table("pedidoitem")]
+    public class PedidoItem : BaseModel
     {
+        [ExplicitKey] //Passando o Id de forma manual
+        //[Key] Id gerado de forma automatico pelo BD
         public int Id { get; set; }
         public int Quantidade { get; set; }
         public decimal Valor_Unitario { get; set; }
