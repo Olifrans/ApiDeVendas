@@ -10,19 +10,28 @@ namespace Vendas.Api.Controllers
     [ApiController]
     public class ProdutosController : ControllerBase
     {
+        //[HttpGet]
+        //public ActionResult<List<Produto> Get()
+        //{
+        //    return ProdutosRepository.Buscar(0, "");
+
+        //    //var produtoResponses = new List<ProdutoResponse>();
+        //    //produtoResponses.Add(getProdutoResponse);
+        //    //produtoResponses.Add(getProdutoResponse2);
+
+        //    //return produtoResponses;
+        //}
+
         [HttpGet]
-        public ActionResult<List<ProdutoResponse>> Get()
+        public ActionResult<List<Produto>> Get()
         {
-            return ProdutosRepository.Buscar(0, "");
-
-            //var produtoResponses = new List<ProdutoResponse>();
-            //produtoResponses.Add(getProdutoResponse);
-            //produtoResponses.Add(getProdutoResponse2);
-
-            //return produtoResponses;
+            return ProdutosRepository.Buscar(0, "m");
         }
 
-        [HttpGet("{id}")]
+
+
+
+         [HttpGet("{id}")]
         public ActionResult<ProdutoResponse> Get(string id)
         {
             var getProdutoResponse = new ProdutoResponse()
@@ -34,6 +43,9 @@ namespace Vendas.Api.Controllers
             };
             return getProdutoResponse;
         }
+
+
+
 
         [HttpPost]
         public ActionResult<ReturnResponse> Post([FromBody] ProdutoRequest produtoRequest)
@@ -56,7 +68,6 @@ namespace Vendas.Api.Controllers
             };
             return putProdutoRequest;
         }
-
 
         [HttpDelete("{id}")]
         public ActionResult<ReturnResponse> Delete(int id)

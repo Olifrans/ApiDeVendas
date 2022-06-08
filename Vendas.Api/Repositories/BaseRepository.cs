@@ -5,7 +5,7 @@ namespace Vendas.Api.Repositories
 {
     public static class BaseRepository
     {
-        public static List<T> QuerySql<T>(string sql, object[] parameter = null)
+        public static List<T> QuerySql<T>(string sql, object parameter = null)
         {
             List<T> querySelect;
 

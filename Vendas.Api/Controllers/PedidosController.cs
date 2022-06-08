@@ -12,48 +12,48 @@ namespace Vendas.Api.Controllers
     public class PedidosController : ControllerBase
     {
 
-        [HttpGet]
-        public ActionResult<List<PedidoResponse>> Get()
-        {
-            var getPedidoResponse = new PedidoResponse()
-            {
-                Nr_PedidoResponse = "1",
-                Cliente = new Cliente().ToString(),
-                DT_PedidoResponse = DateTime.Now.ToString(),
-                Tipo = "V",
-                Itens = new List<PedidoResponseItem>().ToString(),
-            };
+        //[HttpGet]
+        //public ActionResult<List<PedidoResponse>> Get()
+        //{
+        //    var getPedidoResponse = new PedidoResponse()
+        //    {
+        //        Nr_PedidoResponse = "1",
+        //        Cliente = new Cliente().ToString(),
+        //        DT_PedidoResponse = DateTime.Now.ToString(),
+        //        Tipo = "V",
+        //        Itens = new List<PedidoResponseItem>().ToString(),
+        //    };
 
-            var getPedidoResponse2 = new PedidoResponse()
-            {
-                Nr_PedidoResponse = "2",
-                Cliente = new Cliente().ToString(),
-                DT_PedidoResponse = DateTime.Now.ToString(),
-                Tipo = "V",
-                Itens = new List<PedidoResponseItem>().ToString(),
-            };
+        //    var getPedidoResponse2 = new PedidoResponse()
+        //    {
+        //        Nr_PedidoResponse = "2",
+        //        Cliente = new Cliente().ToString(),
+        //        DT_PedidoResponse = DateTime.Now.ToString(),
+        //        Tipo = "V",
+        //        Itens = new List<PedidoResponseItem>().ToString(),
+        //    };
 
-            var PedidoResponses = new List<PedidoResponse>();
-            PedidoResponses.Add(getPedidoResponse);
-            PedidoResponses.Add(getPedidoResponse2);
+        //    var PedidoResponses = new List<PedidoResponse>();
+        //    PedidoResponses.Add(getPedidoResponse);
+        //    PedidoResponses.Add(getPedidoResponse2);
 
-            return PedidoResponses;
-        }
+        //    return PedidoResponses;
+        //}
 
 
-        [HttpGet("{nr_PedidoResponse}")]
-        public ActionResult<PedidoResponse> Get(int nr_PedidoResponse)
-        {
-            var getPedidoResponse = new PedidoResponse()
-            {
-                Nr_PedidoResponse = "2",
-                Cliente = new Cliente().ToString(),
-                DT_PedidoResponse = DateTime.Now.ToString(),
-                Tipo = "V",
-                Itens = new List<PedidoResponseItem>().ToString(),
-            };
-            return getPedidoResponse;
-        }
+        //[HttpGet("{nr_PedidoResponse}")]
+        //public ActionResult<PedidoResponse> Get(int nr_PedidoResponse)
+        //{
+        //    var getPedidoResponse = new PedidoResponse()
+        //    {
+        //        Nr_PedidoResponse = "2",
+        //        Cliente = new Cliente().ToString(),
+        //        DT_PedidoResponse = DateTime.Now.ToString(),
+        //        Tipo = "V",
+        //        Itens = new List<PedidoResponseItem>().ToString(),
+        //    };
+        //    return getPedidoResponse;
+        //}
 
 
         [HttpPost]
