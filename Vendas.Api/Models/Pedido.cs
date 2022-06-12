@@ -7,10 +7,10 @@ namespace Vendas.Api.Models
     {
         //[ExplicitKey] //Passando o Id de forma manual
 
-        public Pedido()
-        {
-            Itens = new List<PedidoItem>();
-        }
+        //public Pedido()
+        //{
+        //    Itens = new List<PedidoItem>();
+        //}
 
         public int Nr_Pedido { get; set; }
 

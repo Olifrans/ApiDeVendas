@@ -33,7 +33,7 @@ namespace Vendas.Api.Controllers
             var retornar = new ReturnResponse()
             {
                 Code = 200,
-                Message = $"Produto {clienteRequest.Nome} cadastrado com sucesso"
+                Message = $"Cliente {clienteRequest.Nome} cadastrado com sucesso"
             };
             return retornar;
         }
@@ -47,7 +47,7 @@ namespace Vendas.Api.Controllers
             var retornar = new ReturnResponse()
             {
                 Code = 200,
-                Message = "Produto atualizado com sucesso"
+                Message = $"O cliente {clienteRequest.Nome} foi atualizado com sucesso"
             };
             return retornar;
         }
@@ -59,7 +59,7 @@ namespace Vendas.Api.Controllers
             var deleteCliente = new ReturnResponse()
             {
                 Code = 200,
-                Message = "Dados excluido com sucesso"
+                Message = $"O cliente {(id)} será excluido definitivamente da base de dados"
             };
             return deleteCliente;
         }

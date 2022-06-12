@@ -11,6 +11,6 @@ namespace Vendas.Api.Models
         public int Quantidade { get; set; }
         public decimal Valor_Unitario { get; set; }
 
-        public Produto Produto { get; set; }
+        public Produto? Produto { get; set; }
     }
 }

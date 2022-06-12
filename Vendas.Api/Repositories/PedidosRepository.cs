@@ -1,6 +1,4 @@
-﻿using Dapper;
-using System.Data.SqlClient;
-using Vendas.Api.Models;
+﻿using Vendas.Api.Models;
 
 namespace Vendas.Api.Repositories
 {
@@ -23,17 +21,19 @@ namespace Vendas.Api.Repositories
 
         public static List<Pedido> Buscar(int nrpedido = 0, int clienteId = 0)
         {
-            string sql = @"select
-                            p.NumeroPedido as Nr_Pedido,
-                            p.Data,
-                            p.Tipo,
-                            p.id_cliente,
-                            c.Id,
-                            c.Nome,
-                            c.Email,
-                            c.DT_Nascimento
-                            from Pedido p
-                            join Cliente c on p.id_cliente = c.Id";
+            //string sql = @"select
+            //                p.NumeroPedido as Nr_Pedido,
+            //                p.Data,
+            //                p.Tipo,
+            //                p.id_cliente,
+            //                c.Id,
+            //                c.Nome,
+            //                c.Email,
+            //                c.DT_Nascimento
+            //                from Pedido p
+            //                join Cliente c on p.id_cliente = c.Id";
+
+            string sql = "select * from Pedido";
 
             if (nrpedido > 0)
             {
@@ -48,29 +48,32 @@ namespace Vendas.Api.Repositories
                     sql += " where id_cliente = @Id_cliente";
             }
 
-            List<Pedido> querySelect;
-            using (var connection = new SqlConnection(BaseRepository.ConnectionString))
-            {
-                querySelect = connection.Query<Pedido, Cliente, Pedido>(sql, map: mapeiaPropriedades, splitOn: "id", param: new { Nrpedido = nrpedido, Id_cliente = clienteId }).ToList();
-            }
+            var retorno = BaseRepository.QuerySql<Pedido>(sql, new { Nrpedido = nrpedido, Id_cliente = clienteId });
 
-            const string sqlitem = @"select * from pedidoitem where NumeroPedido = @NumeroPedido";
+            return retorno;
 
-            foreach (var item in querySelect)
-            {
-                using (var connection = new SqlConnection(BaseRepository.ConnectionString))
-                {
-                    item.Itens.AddRange(connection.Query<PedidoItem>(sqlitem, param: new { NumeroPedido = item.Nr_Pedido }).ToList());
-                }
-            }
+            //List<Pedido> querySelect;
+            //using (var connection = new SqlConnection(BaseRepository.ConnectionString))
+            //{
+            //    querySelect = connection.Query<Pedido, Cliente, Pedido>(sql, map: mapeiaPropriedades, splitOn: "id", param: new { Nrpedido = nrpedido, Id_cliente = clienteId }).ToList();
+            //}
 
-            return querySelect;
+            //const string sqlitem = @"select * from pedidoitem where NumeroPedido = @NumeroPedido";
+
+            //foreach (var item in querySelect)
+            //{
+            //    using (var connection = new SqlConnection(BaseRepository.ConnectionString))
+            //    {
+            //        item.Itens.AddRange(connection.Query<PedidoItem>(sqlitem, param: new { NumeroPedido = item.Nr_Pedido }).ToList());
+            //    }
+            //}
+            //return querySelect;
         }
 
-        private static Pedido mapeiaPropriedades(Pedido pedido, Cliente cliente)
-        {
-            pedido.Cliente = cliente;
-            return pedido;
-        }
+        //private static Pedido mapeiaPropriedades(Pedido pedido, Cliente cliente)
+        //{
+        //    pedido.Cliente = cliente;
+        //    return pedido;
+        //}
     }
 }

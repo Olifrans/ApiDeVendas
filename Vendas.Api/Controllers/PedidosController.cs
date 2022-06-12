@@ -28,6 +28,7 @@ namespace Vendas.Api.Controllers
         //    return getPedidoId;
         //}
 
+
         [HttpPost]
         public ActionResult<ReturnResponse> Post([FromBody] ProdutoRequest produtoRequest)
         {
@@ -41,6 +42,8 @@ namespace Vendas.Api.Controllers
             };
             return retornar;
         }
+
+
 
         [HttpPut("{id}")]
         public ActionResult<ReturnResponse> Put([FromBody] ProdutoRequest produtoRequest)
