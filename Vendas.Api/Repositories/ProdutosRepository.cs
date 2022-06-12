@@ -1,22 +1,47 @@
 ﻿using Vendas.Api.Models;
+using Vendas.Api.Responses;
 
 namespace Vendas.Api.Repositories
 {
     public static class ProdutosRepository
     {
-        public static void Gravar(Produto produto)
+        public static ReturnResponse Gravar(Produto produto)
         {
-            BaseRepository.Command(produto);
+            try
+            {
+                BaseRepository.Command(produto);
+                return new ReturnResponse(200, $"Produto {produto.Descricao} cadastrado com sucesso");
+            }
+            catch (Exception ex)
+            {
+                return new ReturnResponse(500, string.Format("Erro ao cadastrar o produto", ex.Message));
+            }
         }
 
-        public static void Atualizar(Produto produto)
+        public static ReturnResponse Atualizar(Produto produto)
         {
-            BaseRepository.Command(produto, true);
+            try
+            {
+                BaseRepository.Command(produto, true);
+                return new ReturnResponse(200, $"Produto {produto.Descricao} atualizado com sucesso");
+            }
+            catch (Exception ex)
+            {
+                return new ReturnResponse(500, string.Format("Erro ao atualizar o produto", ex.Message));
+            }
         }
 
-        public static void Delete(int id)
+        public static ReturnResponse Delete(int id)
         {
-            BaseRepository.Delete<Produto>(id);
+            try
+            {
+                BaseRepository.Delete<Produto>(id);
+                return new ReturnResponse(200, $"Produto excluido com sucesso");
+            }
+            catch (Exception ex)
+            {
+                return new ReturnResponse(500, string.Format("Erro ao excluir o produto", ex.Message));
+            }
         }
 
         public static List<Produto> Buscar(int id = 0, string descricao = "")

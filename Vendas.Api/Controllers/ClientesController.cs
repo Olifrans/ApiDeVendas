@@ -28,40 +28,20 @@ namespace Vendas.Api.Controllers
         public ActionResult<ReturnResponse> Post([FromBody] ClienteRequest clienteRequest)
         {
             var novoCliente = ClienteMapper.Mapper(clienteRequest);
-            ClientesRepository.Gravar(novoCliente);
-
-            var retornar = new ReturnResponse()
-            {
-                Code = 200,
-                Message = $"Cliente {clienteRequest.Nome} cadastrado com sucesso"
-            };
-            return retornar;
+            return ClientesRepository.Gravar(novoCliente);
         }
 
         [HttpPut("{id}")]
         public ActionResult<ReturnResponse> Put([FromBody] ClienteRequest clienteRequest)
         {
             var updateCliente = ClienteMapper.Mapper(clienteRequest);
-            ClientesRepository.Atualizar(updateCliente);
-
-            var retornar = new ReturnResponse()
-            {
-                Code = 200,
-                Message = $"O cliente {clienteRequest.Nome} foi atualizado com sucesso"
-            };
-            return retornar;
+            return ClientesRepository.Atualizar(updateCliente);
         }
 
         [HttpDelete("{id}")]
         public ActionResult<ReturnResponse> Delete(int id)
         {
-            ClientesRepository.Delete(id);
-            var deleteCliente = new ReturnResponse()
-            {
-                Code = 200,
-                Message = $"O cliente {(id)} será excluido definitivamente da base de dados"
-            };
-            return deleteCliente;
+            return ClientesRepository.Delete(id);
         }
     }
 }

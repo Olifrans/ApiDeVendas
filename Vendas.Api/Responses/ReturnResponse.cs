@@ -1,13 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Vendas.Api.Responses
+﻿namespace Vendas.Api.Responses
 {
     public class ReturnResponse
     {
+        public ReturnResponse()
+        {
+            Code = 200;
+            Message = "Sucesso";
+        }
+
+        public ReturnResponse(int code, string message)
+        {
+            Code = code;
+            Message = message;
+        }
+
         public int Code { get; set; }
         public string? Message { get; set; }
     }

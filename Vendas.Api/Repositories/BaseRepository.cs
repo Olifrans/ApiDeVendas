@@ -7,15 +7,14 @@ namespace Vendas.Api.Repositories
 {
     public static class BaseRepository
     {
-        ////ConnectionString  getList<Pedido>
-        //public const string ConnectionString = "Server=V-DEVSERVER;Database=ApiDeVendas;Trusted_Connection=True;";
+        //ConnectionString  getList<Pedido>
+        private const string ConnectionString = "Server=V-DEVSERVER;Database=ApiDeVendas;Trusted_Connection=True;";
 
         //GetAll
         public static List<T> QuerySql<T>(string sql, object parameter = null)
         {
             List<T> querySelect;
-
-            using (var connection = new SqlConnection("Server=V-DEVSERVER;Database=ApiDeVendas;Trusted_Connection=True;"))
+            using (var connection = new SqlConnection(ConnectionString))
             {
                 querySelect = connection.Query<T>(sql, parameter).ToList();
             }
@@ -25,7 +24,7 @@ namespace Vendas.Api.Repositories
         //Post e Put
         public static void Command<T>(T objeto, bool editar = false, object parameter = null) where T : BaseModel
         {
-            using (var connection = new SqlConnection("Server=V-DEVSERVER;Database=ApiDeVendas;Trusted_Connection=True;"))
+            using (var connection = new SqlConnection(ConnectionString))
             {
                 if (editar)
                     connection.Update(objeto);
@@ -37,7 +36,7 @@ namespace Vendas.Api.Repositories
         //Delete
         public static void Delete<T>(int id) where T : BaseModel
         {
-            using (var connection = new SqlConnection("Server=V-DEVSERVER;Database=ApiDeVendas;Trusted_Connection=True;"))
+            using (var connection = new SqlConnection(ConnectionString))
             {
                 var tabela = typeof(T).Name;
                 string queryDelete = $"select * from {tabela} where {BuscarColunaChave(tabela)} = @id";
@@ -58,7 +57,7 @@ namespace Vendas.Api.Repositories
                              AND CONSTRAINT_TYPE = 'Primary key'
                              AND Col.TABLE_NAME = @tablename";
 
-            using (var connection = new SqlConnection("Server=V-DEVSERVER;Database=ApiDeVendas;Trusted_Connection=True;"))
+            using (var connection = new SqlConnection(ConnectionString))
             {
                 return connection.Query<string>(query, new { tablename = nomeTabela }).FirstOrDefault();
             }

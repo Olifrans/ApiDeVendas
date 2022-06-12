@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Vendas.Api.Mapper;
-using Vendas.Api.Models;
 using Vendas.Api.Repositories;
 using Vendas.Api.Request;
 using Vendas.Api.Responses;
@@ -13,63 +12,38 @@ namespace Vendas.Api.Controllers
     [ApiController]
     public class PedidosController : ControllerBase
     {
-
         [HttpGet]
         public ActionResult<List<PedidoResponse>> Get()
         {
-            var getProdutos = PedidosRepository.Buscar().Select(p => PedidoMapper.Mapper(p));
-            return getProdutos.ToList();
+            var getPedidos = PedidosRepository.Buscar().Select(p => PedidoMapper.Mapper(p));
+            return getPedidos.ToList();
         }
 
-        //[HttpGet("{id}")]
-        //public ActionResult<ProdutoResponse> Get(int Nr_Pedido)
-        //{
-        //    var getPedidoId = PedidoMapper.Mapper(PedidosRepository.Buscar(Nr_Pedido).FirstOrDefault());
-        //    return getPedidoId;
-        //}
-
+        [HttpGet("{id}")]
+        public ActionResult<PedidoResponse> Get(int id)
+        {
+            var getPedidoId = PedidoMapper.Mapper(PedidosRepository.Buscar(id).FirstOrDefault());
+            return getPedidoId;
+        }
 
         [HttpPost]
-        public ActionResult<ReturnResponse> Post([FromBody] ProdutoRequest produtoRequest)
+        public ActionResult<ReturnResponse> Post([FromBody] PedidoRequest pedidoRequest)
         {
-            var novoProduto = ProdutoMapper.Mapper(produtoRequest);
-            ProdutosRepository.Gravar(novoProduto);
-
-            var retornar = new ReturnResponse()
-            {
-                Code = 200,
-                Message = $"Produto {produtoRequest.Descricao} cadastrado com sucesso"
-            };
-            return retornar;
+            var novoPedido = PedidoMapper.Mapper(pedidoRequest);
+            return PedidosRepository.Gravar(novoPedido);
         }
 
-
-
         [HttpPut("{id}")]
-        public ActionResult<ReturnResponse> Put([FromBody] ProdutoRequest produtoRequest)
+        public ActionResult<ReturnResponse> Put([FromBody] PedidoRequest pedidoRequest)
         {
-            var updateProduto = ProdutoMapper.Mapper(produtoRequest);
-            ProdutosRepository.Atualizar(updateProduto);
-
-            var retornar = new ReturnResponse()
-            {
-                Code = 200,
-                Message = "Produto atualizado com sucesso"
-            };
-            return retornar;
+            var updatePedido = PedidoMapper.Mapper(pedidoRequest);
+            return PedidosRepository.Atualizar(updatePedido);
         }
 
         [HttpDelete("{id}")]
         public ActionResult<ReturnResponse> Delete(int id)
         {
-            var deletProduto = new ReturnResponse()
-            {
-                Code = 200,
-                Message = "Dados excluido com sucesso"
-            };
-            return deletProduto;
+            return PedidosRepository.Delete(id);
         }
-
-
     }
 }

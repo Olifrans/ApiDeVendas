@@ -1,22 +1,47 @@
 ﻿using Vendas.Api.Models;
+using Vendas.Api.Responses;
 
 namespace Vendas.Api.Repositories
 {
     public static class PedidosRepository
     {
-        public static void Gravar(Pedido pedido)
+        public static ReturnResponse Gravar(Pedido pedido)
         {
-            BaseRepository.Command(pedido);
+            try
+            {
+                BaseRepository.Command(pedido);
+                return new ReturnResponse(200, $"Pedido {pedido.Cliente} realizado com sucesso");
+            }
+            catch (Exception ex)
+            {
+                return new ReturnResponse(500, string.Format("Erro ao realizar o pedido", ex.Message));
+            }
         }
 
-        public static void Atualizar(Pedido pedido)
+        public static ReturnResponse Atualizar(Pedido pedido)
         {
-            BaseRepository.Command(pedido, true);
+            try
+            {
+                BaseRepository.Command(pedido, true);
+                return new ReturnResponse(200, $"Pedido {pedido.Cliente} atualizado com sucesso");
+            }
+            catch (Exception ex)
+            {
+                return new ReturnResponse(500, string.Format("Erro ao atualizado o pedido", ex.Message));
+            }
         }
 
-        public static void Delete(int id)
+        public static ReturnResponse Delete(int id)
         {
-            BaseRepository.Delete<Pedido>(id);
+            try
+            {
+                BaseRepository.Delete<Pedido>(id);
+                return new ReturnResponse(200, $"Pedido excluido com sucesso");
+            }
+            catch (Exception ex)
+            {
+                return new ReturnResponse(500, string.Format("Erro ao excluir o pedido", ex.Message));
+            }
         }
 
         public static List<Pedido> Buscar(int nrpedido = 0, int clienteId = 0)

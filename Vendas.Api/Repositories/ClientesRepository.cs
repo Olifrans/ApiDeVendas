@@ -1,21 +1,47 @@
 ﻿using Vendas.Api.Models;
+using Vendas.Api.Responses;
+
 namespace Vendas.Api.Repositories
 {
     public static class ClientesRepository
     {
-        public static void Gravar(Cliente cliente)
+        public static ReturnResponse Gravar(Cliente cliente)
         {
-            BaseRepository.Command(cliente);
+            try
+            {
+                BaseRepository.Command(cliente);
+                return new ReturnResponse(200, $"O Cliente {cliente.Nome} cadastrado com sucesso");
+            }
+            catch (Exception ex)
+            {
+                return new ReturnResponse(500, string.Format("Erro ao cadastrar o cliente", ex.Message));
+            }
         }
 
-        public static void Atualizar(Cliente cliente)
+        public static ReturnResponse Atualizar(Cliente cliente)
         {
-            BaseRepository.Command(cliente, true);
+            try
+            {
+                BaseRepository.Command(cliente, true);
+                return new ReturnResponse(200, $"O Cliente {cliente.Nome} atualizado com sucesso");
+            }
+            catch (Exception ex)
+            {
+                return new ReturnResponse(500, string.Format("Erro ao atualizar o cliente", ex.Message));
+            }
         }
 
-        public static void Delete(int id)
+        public static ReturnResponse Delete(int id)
         {
-            BaseRepository.Delete<Cliente>(id);
+            try
+            {
+                BaseRepository.Delete<Cliente>(id);
+                return new ReturnResponse(200, $"Cliente excluido da base de dados?");
+            }
+            catch (Exception ex)
+            {
+                return new ReturnResponse(500, string.Format("Erro ao excluir o cliente", ex.Message));
+            }
         }
 
         public static List<Cliente> Buscar(int id = 0, string nome = "")

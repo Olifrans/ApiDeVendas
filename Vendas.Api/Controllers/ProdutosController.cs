@@ -28,40 +28,20 @@ namespace Vendas.Api.Controllers
         public ActionResult<ReturnResponse> Post([FromBody] ProdutoRequest produtoRequest)
         {
             var novoProduto = ProdutoMapper.Mapper(produtoRequest);
-            ProdutosRepository.Gravar(novoProduto);
-
-            var retornar = new ReturnResponse()
-            {
-                Code = 200,
-                Message = $"Produto {produtoRequest.Descricao} cadastrado com sucesso"
-            };
-            return retornar;
+            return ProdutosRepository.Gravar(novoProduto);
         }
 
         [HttpPut("{id}")]
         public ActionResult<ReturnResponse> Put([FromBody] ProdutoRequest produtoRequest)
         {
             var updateProduto = ProdutoMapper.Mapper(produtoRequest);
-            ProdutosRepository.Atualizar(updateProduto);
-
-            var retornar = new ReturnResponse()
-            {
-                Code = 200,
-                Message = "Produto atualizado com sucesso"
-            };
-            return retornar;
+            return ProdutosRepository.Atualizar(updateProduto);
         }
 
         [HttpDelete("{id}")]
         public ActionResult<ReturnResponse> Delete(int id)
         {
-            ProdutosRepository.Delete(id);
-            var deletProduto = new ReturnResponse()
-            {
-                Code = 200,
-                Message = "Dados excluido com sucesso"
-            };
-            return deletProduto;
+            return ProdutosRepository.Delete(id);
         }
     }
 }
